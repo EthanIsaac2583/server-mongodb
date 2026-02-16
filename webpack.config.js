@@ -8,7 +8,7 @@ let dependencies = Object.keys(require('./package.json').dependencies).reduce(fu
 module.exports = {
     target: 'node',
     entry: {
-        mongodb: './src/index.js',
+        index: './src/index.js',
     },
     externalsPresets: { node: true },
     externals: dependencies,

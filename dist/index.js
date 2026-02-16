@@ -1,68 +1,1961 @@
-'use strict';var $jscomp=$jscomp||{};$jscomp.scope={};$jscomp.arrayIteratorImpl=function(f){var m=0;return function(){return m<f.length?{done:!1,value:f[m++]}:{done:!0}}};$jscomp.arrayIterator=function(f){return{next:$jscomp.arrayIteratorImpl(f)}};$jscomp.makeIterator=function(f){var m="undefined"!=typeof Symbol&&Symbol.iterator&&f[Symbol.iterator];if(m)return m.call(f);if("number"==typeof f.length)return $jscomp.arrayIterator(f);throw Error(String(f)+" is not an iterable or ArrayLike");};
-$jscomp.ASSUME_ES5=!1;$jscomp.ASSUME_NO_NATIVE_MAP=!1;$jscomp.ASSUME_NO_NATIVE_SET=!1;$jscomp.SIMPLE_FROUND_POLYFILL=!1;$jscomp.ISOLATE_POLYFILLS=!1;$jscomp.FORCE_POLYFILL_PROMISE=!1;$jscomp.FORCE_POLYFILL_PROMISE_WHEN_NO_UNHANDLED_REJECTION=!1;$jscomp.defineProperty=$jscomp.ASSUME_ES5||"function"==typeof Object.defineProperties?Object.defineProperty:function(f,m,y){if(f==Array.prototype||f==Object.prototype)return f;f[m]=y.value;return f};
-$jscomp.getGlobal=function(f){f=["object"==typeof globalThis&&globalThis,f,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var m=0;m<f.length;++m){var y=f[m];if(y&&y.Math==Math)return y}throw Error("Cannot find global object");};$jscomp.global=$jscomp.getGlobal(this);$jscomp.IS_SYMBOL_NATIVE="function"===typeof Symbol&&"symbol"===typeof Symbol("x");$jscomp.TRUST_ES6_POLYFILLS=!$jscomp.ISOLATE_POLYFILLS||$jscomp.IS_SYMBOL_NATIVE;$jscomp.polyfills={};
-$jscomp.propertyToPolyfillSymbol={};$jscomp.POLYFILL_PREFIX="$jscp$";var $jscomp$lookupPolyfilledValue=function(f,m,y){if(!y||null!=f){y=$jscomp.propertyToPolyfillSymbol[m];if(null==y)return f[m];y=f[y];return void 0!==y?y:f[m]}};$jscomp.polyfill=function(f,m,y,C){m&&($jscomp.ISOLATE_POLYFILLS?$jscomp.polyfillIsolated(f,m,y,C):$jscomp.polyfillUnisolated(f,m,y,C))};
-$jscomp.polyfillUnisolated=function(f,m,y,C){y=$jscomp.global;f=f.split(".");for(C=0;C<f.length-1;C++){var H=f[C];if(!(H in y))return;y=y[H]}f=f[f.length-1];C=y[f];m=m(C);m!=C&&null!=m&&$jscomp.defineProperty(y,f,{configurable:!0,writable:!0,value:m})};
-$jscomp.polyfillIsolated=function(f,m,y,C){var H=f.split(".");f=1===H.length;C=H[0];C=!f&&C in $jscomp.polyfills?$jscomp.polyfills:$jscomp.global;for(var t=0;t<H.length-1;t++){var d=H[t];if(!(d in C))return;C=C[d]}H=H[H.length-1];y=$jscomp.IS_SYMBOL_NATIVE&&"es6"===y?C[H]:null;m=m(y);null!=m&&(f?$jscomp.defineProperty($jscomp.polyfills,H,{configurable:!0,writable:!0,value:m}):m!==y&&(void 0===$jscomp.propertyToPolyfillSymbol[H]&&(y=1E9*Math.random()>>>0,$jscomp.propertyToPolyfillSymbol[H]=$jscomp.IS_SYMBOL_NATIVE?
-$jscomp.global.Symbol(H):$jscomp.POLYFILL_PREFIX+y+"$"+H),$jscomp.defineProperty(C,$jscomp.propertyToPolyfillSymbol[H],{configurable:!0,writable:!0,value:m})))};$jscomp.underscoreProtoCanBeSet=function(){var f={a:!0},m={};try{return m.__proto__=f,m.a}catch(y){}return!1};
-$jscomp.setPrototypeOf=$jscomp.TRUST_ES6_POLYFILLS&&"function"==typeof Object.setPrototypeOf?Object.setPrototypeOf:$jscomp.underscoreProtoCanBeSet()?function(f,m){f.__proto__=m;if(f.__proto__!==m)throw new TypeError(f+" is not extensible");return f}:null;$jscomp.generator={};$jscomp.generator.ensureIteratorResultIsObject_=function(f){if(!(f instanceof Object))throw new TypeError("Iterator result "+f+" is not an object");};
-$jscomp.generator.Context=function(){this.isRunning_=!1;this.yieldAllIterator_=null;this.yieldResult=void 0;this.nextAddress=1;this.finallyAddress_=this.catchAddress_=0;this.finallyContexts_=this.abruptCompletion_=null};$jscomp.generator.Context.prototype.start_=function(){if(this.isRunning_)throw new TypeError("Generator is already running");this.isRunning_=!0};$jscomp.generator.Context.prototype.stop_=function(){this.isRunning_=!1};
-$jscomp.generator.Context.prototype.jumpToErrorHandler_=function(){this.nextAddress=this.catchAddress_||this.finallyAddress_};$jscomp.generator.Context.prototype.next_=function(f){this.yieldResult=f};$jscomp.generator.Context.prototype.throw_=function(f){this.abruptCompletion_={exception:f,isException:!0};this.jumpToErrorHandler_()};$jscomp.generator.Context.prototype.return=function(f){this.abruptCompletion_={return:f};this.nextAddress=this.finallyAddress_};
-$jscomp.generator.Context.prototype.jumpThroughFinallyBlocks=function(f){this.abruptCompletion_={jumpTo:f};this.nextAddress=this.finallyAddress_};$jscomp.generator.Context.prototype.yield=function(f,m){this.nextAddress=m;return{value:f}};$jscomp.generator.Context.prototype.yieldAll=function(f,m){f=$jscomp.makeIterator(f);var y=f.next();$jscomp.generator.ensureIteratorResultIsObject_(y);if(y.done)this.yieldResult=y.value,this.nextAddress=m;else return this.yieldAllIterator_=f,this.yield(y.value,m)};
-$jscomp.generator.Context.prototype.jumpTo=function(f){this.nextAddress=f};$jscomp.generator.Context.prototype.jumpToEnd=function(){this.nextAddress=0};$jscomp.generator.Context.prototype.setCatchFinallyBlocks=function(f,m){this.catchAddress_=f;void 0!=m&&(this.finallyAddress_=m)};$jscomp.generator.Context.prototype.setFinallyBlock=function(f){this.catchAddress_=0;this.finallyAddress_=f||0};$jscomp.generator.Context.prototype.leaveTryBlock=function(f,m){this.nextAddress=f;this.catchAddress_=m||0};
-$jscomp.generator.Context.prototype.enterCatchBlock=function(f){this.catchAddress_=f||0;f=this.abruptCompletion_.exception;this.abruptCompletion_=null;return f};$jscomp.generator.Context.prototype.enterFinallyBlock=function(f,m,y){y?this.finallyContexts_[y]=this.abruptCompletion_:this.finallyContexts_=[this.abruptCompletion_];this.catchAddress_=f||0;this.finallyAddress_=m||0};
-$jscomp.generator.Context.prototype.leaveFinallyBlock=function(f,m){m=this.finallyContexts_.splice(m||0)[0];if(m=this.abruptCompletion_=this.abruptCompletion_||m){if(m.isException)return this.jumpToErrorHandler_();void 0!=m.jumpTo&&this.finallyAddress_<m.jumpTo?(this.nextAddress=m.jumpTo,this.abruptCompletion_=null):this.nextAddress=this.finallyAddress_}else this.nextAddress=f};$jscomp.generator.Context.prototype.forIn=function(f){return new $jscomp.generator.Context.PropertyIterator(f)};
-$jscomp.generator.Context.PropertyIterator=function(f){this.object_=f;this.properties_=[];for(var m in f)this.properties_.push(m);this.properties_.reverse()};$jscomp.generator.Context.PropertyIterator.prototype.getNext=function(){for(;0<this.properties_.length;){var f=this.properties_.pop();if(f in this.object_)return f}return null};$jscomp.generator.Engine_=function(f){this.context_=new $jscomp.generator.Context;this.program_=f};
-$jscomp.generator.Engine_.prototype.next_=function(f){this.context_.start_();if(this.context_.yieldAllIterator_)return this.yieldAllStep_(this.context_.yieldAllIterator_.next,f,this.context_.next_);this.context_.next_(f);return this.nextStep_()};
-$jscomp.generator.Engine_.prototype.return_=function(f){this.context_.start_();var m=this.context_.yieldAllIterator_;if(m)return this.yieldAllStep_("return"in m?m["return"]:function(y){return{value:y,done:!0}},f,this.context_.return);this.context_.return(f);return this.nextStep_()};
-$jscomp.generator.Engine_.prototype.throw_=function(f){this.context_.start_();if(this.context_.yieldAllIterator_)return this.yieldAllStep_(this.context_.yieldAllIterator_["throw"],f,this.context_.next_);this.context_.throw_(f);return this.nextStep_()};
-$jscomp.generator.Engine_.prototype.yieldAllStep_=function(f,m,y){try{var C=f.call(this.context_.yieldAllIterator_,m);$jscomp.generator.ensureIteratorResultIsObject_(C);if(!C.done)return this.context_.stop_(),C;var H=C.value}catch(t){return this.context_.yieldAllIterator_=null,this.context_.throw_(t),this.nextStep_()}this.context_.yieldAllIterator_=null;y.call(this.context_,H);return this.nextStep_()};
-$jscomp.generator.Engine_.prototype.nextStep_=function(){for(;this.context_.nextAddress;)try{var f=this.program_(this.context_);if(f)return this.context_.stop_(),{value:f.value,done:!1}}catch(m){this.context_.yieldResult=void 0,this.context_.throw_(m)}this.context_.stop_();if(this.context_.abruptCompletion_){f=this.context_.abruptCompletion_;this.context_.abruptCompletion_=null;if(f.isException)throw f.exception;return{value:f.return,done:!0}}return{value:void 0,done:!0}};
-$jscomp.generator.Generator_=function(f){this.next=function(m){return f.next_(m)};this.throw=function(m){return f.throw_(m)};this.return=function(m){return f.return_(m)};this[Symbol.iterator]=function(){return this}};$jscomp.generator.createGenerator=function(f,m){m=new $jscomp.generator.Generator_(new $jscomp.generator.Engine_(m));$jscomp.setPrototypeOf&&f.prototype&&$jscomp.setPrototypeOf(m,f.prototype);return m};
-$jscomp.asyncExecutePromiseGenerator=function(f){function m(C){return f.next(C)}function y(C){return f.throw(C)}return new Promise(function(C,H){function t(d){d.done?C(d.value):Promise.resolve(d.value).then(m,y).then(t,H)}t(f.next())})};$jscomp.asyncExecutePromiseGeneratorFunction=function(f){return $jscomp.asyncExecutePromiseGenerator(f())};$jscomp.asyncExecutePromiseGeneratorProgram=function(f){return $jscomp.asyncExecutePromiseGenerator(new $jscomp.generator.Generator_(new $jscomp.generator.Engine_(f)))};
-function a0_0x3734(){const f="2867682bRQNXQ;row;log;startTransaction;.freezeColumns;slice;.style;.state;Contents;add;name;.data.y.;toISOString;minDimensions;undefined;$unset;Updated;spreadsheet.style;path;value;index;media;column;.cache.;invalid image type;spreadsheet;mergeCells;.comments.;.mergeCells.;create;.height;sort;client;list;getImage;commitTransaction;guid;code;api;.footers;post;findOne;fromCharCode;.columns;worksheetId;properties;@aws-sdk/client-s3;spreadsheet.definedNames.;.group;collection;end;validations;columns;connect;2700515hiLyEM;setImage;.worksheetState;get;options;.cells;mongodb://mongodb;args;.width;spreadsheet.validations.;mongodb;cells;decode;forEach;305845ZRogos;NoSuchKey;/api/;rows;.data;find;beforeChange;pow;$position;charCodeAt;max;sendmail;user_id;region;sub;worksheets;spreadsheet.worksheets;from;isArray;jpeg;bulkWrite;destroy;abortTransaction;send;entries;.columns.;$push;.visible;.title;.meta.;privacy;base64;getStyle;length;users;424551rDsMLS;spreadsheet.;splice;jsonwebtoken;2rCTHac;has;uuid;method;instance;data;parse;.meta;change;insertOne;error;.id;.media;worksheetIndex;bucket;2798056hIqIQC;/images/;jpg;save;710636mMXbZs;Forbidden;footers;token;.mergeCells;setAction;exports;.rows;.footers.;updateOne;meta;key;3632377FrMcAe;style;delete;function;replace;startSession;email;result;$set;comments;deleteUsers;toLowerCase;authQuery;findIndex;keys;.freezeRows;.nestedHeaders;push;Body;.minDimensions.1;toArray;spreadsheet.worksheets.;set;endSession;_id;boolean;.worksheetName;Worksheet not found;concat;document;gif".split(";");
-a0_0x3734=function(){return f};return a0_0x3734()}function a0_0x2ae3(f,m){const y=a0_0x3734();return a0_0x2ae3=function(C,H){return y[C-397]},a0_0x2ae3(f,m)}(function(f,m){const y=a0_0x2ae3;for(f=f();;)try{if(parseInt(y(553))/1+-parseInt(y(423))/2*(parseInt(y(419))/3)+-parseInt(y(442))/4+-parseInt(y(539))/5+parseInt(y(485))/6+parseInt(y(454))/7+parseInt(y(438))/8===m)break;else f.push(f.shift())}catch(C){f.push(f.shift())}})(a0_0x3734,793181);
-(()=>{function f(t){const d=a0_0x2ae3;var a=C[t];if(void 0!==a)return a[d(448)];a=C[t]={exports:{}};return y[t].call(a[d(448)],a,a[d(448)],f),a[d(448)]}const m=a0_0x2ae3;var y={1507:t=>{t[a0_0x2ae3(448)]={getCoordsFromCellName:d=>{var a=a0_0x2ae3;const b=d.match(/^[A-Z]+/)[0],g=d[a(490)](b[a(417)]);d=0;for(let h=0;h<b[a(417)];h++){let v=b[a(562)](h)-64;d+=v*Math[a(560)](26,b[a(417)]-h-1)}d--;a=parseInt(g)-1;return Number.isNaN(a)&&(a=void 0),[d,a]},getColumnNameFromCoords:(d,a)=>{d=parseInt(d);const b=
-a0_0x2ae3;let g="";701<d?(g+=String[b(527)](64+parseInt(d/676)),g+=String[b(527)](64+parseInt(d%676/26))):25<d&&(g+=String[b(527)](64+parseInt(d/26)));return(g+=String[b(527)](65+d%26),g)+(parseInt(a)+1)}}},5461:function(t,d,a){const b=a(4333),g=a(1127),{MongoClient:h}=a(9884);a(1021);const {setWidth:v,hideColumn:u,showColumn:c,insertColumn:e,moveColumn:l,deleteColumn:q}=a(281),{setHeight:k,hideRow:p,showRow:r,moveRow:n,insertRow:x,deleteRow:A,setRowId:D}=a(5847),{setMeta:J,resetMeta:B}=a(9602),{setComments:N}=
-a(7169),{setFreezeColumns:P}=a(9373),{setFreezeRows:S}=a(813),{setFooter:T,setFooterValue:W,resetFooter:U}=a(9268),{setHeader:V}=a(9922),{setNestedHeaders:ba,resetNestedHeaders:ca,setNestedCell:da}=a(1964),{setMerge:ea,removeMerge:fa}=a(1919),{setCache:ha}=a(8489),{setStyle:ia,resetStyle:ja}=a(9746),{setProperty:ka,updateProperty:la}=a(8302),{setValidations:ma}=a(9195),{setMedia:na}=a(7255),{createWorksheet:oa,deleteWorksheet:pa,renameWorksheet:qa,moveWorksheet:ra,setWorksheetState:sa,validateWorksheet:ta}=
-a(6091),{setValue:ua,setFormula:va}=a(9651),{setColumnGroup:wa,setRowGroup:xa}=a(4788),{setDefinedNames:ya}=a(8016),{setConfig:za}=a(7381),{orderBy:Aa}=a(7603),{setName:Ba}=a(7012);(function(w,Q){t[a0_0x2ae3(448)]=Q()})(this,function(){const w=a0_0x2ae3;var Q=w(545);Q=new h(Q);Q[w(538)]();const O=Q.db("jspreadsheet")[w(534)]("documents"),Z={setConfig:za,setWidth:v,hideColumn:u,showColumn:c,insertColumn:e,moveColumn:l,deleteColumn:q,setHeight:k,hideRow:p,showRow:r,moveRow:n,setMeta:J,resetMeta:B,setComments:N,
-setFreezeColumns:P,setFreezeRows:S,setFooter:T,setFooterValue:W,resetFooter:U,setHeader:V,setMerge:ea,removeMerge:fa,setColumnGroup:wa,setRowGroup:xa,setNestedHeaders:ba,setNestedCell:da,resetNestedHeaders:ca,setCache:ha,setValidations:ma,setStyle:ia,resetStyle:ja,setProperty:ka,updateProperty:la,setMedia:na,createWorksheet:oa,deleteWorksheet:pa,renameWorksheet:qa,moveWorksheet:ra,setWorksheetState:sa,setValue:ua,setFormula:va,setDefinedNames:ya,insertRow:x,deleteRow:A,setRowId:D,orderBy:Aa,setName:Ba},
-aa=function(G){let F=null;G&&G[w(445)]&&(G=g[w(551)](G[w(445)]))&&(F=G[w(398)]);return F},Y=function(G,F){return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){let E=yield O.findOne({_id:G});return E?E:!1})},Ca=function(G){return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){G[w(518)]={get:function(){const F=this;return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){var E=aa(F.authQuery);E=yield(yield O[w(558)]({user_id:E},{projection:{guid:1,"spreadsheet.name":1,updated:1,
-"spreadsheet.privacy":1}}))[w(474)]();E[w(417)]&&E[w(552)](z=>{z[w(521)]=z[w(478)];z[w(414)]=z[w(510)][w(414)]?1:0;z[w(495)]=z[w(510)][w(495)];delete z[w(510)]});F[w(461)]=E})}}})},Da=function(G){return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){G.users={get:function(){const F=this;return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){const E=a0_0x2ae3;var z=F[E(503)][1];z=yield O.findOne({_id:z},{projection:{users:1}});F.result=z[E(418)]||[]})},"delete":function(F){const E=
-this;return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){const z=a0_0x2ae3;let M=E[z(503)][1],K=E.path[3];if(K){var I={method:z(464),args:[K]};if("function"===typeof F[z(543)][z(559)]&&!1===(yield F[z(543)][z(559)](M,I,E.authQuery)))return E[z(522)]=403,E[z(461)]=z(443),!1;I=yield O[z(526)]({_id:M},{projection:{users:1}});let R=[];I[z(418)]&&I[z(418)].forEach(L=>{L[z(460)]!==K&&R[z(471)](L)});yield O[z(451)]({_id:M},{$set:{users:R}})}E[z(461)]=z(501)})},post:function(F){const E=this;return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){const z=
-a0_0x2ae3;let M=E[z(503)][1];var K=JSON.parse(E[z(525)][z(428)]);if(K.length){var I={method:"setUsers",args:[K,E[z(525)][z(564)]]};if(typeof F[z(543)][z(559)]===z(457)&&!1===(yield F.options.beforeChange(M,I,E[z(466)])))return E.code=403,E[z(461)]=z(443),!1;const R=new Map;I=yield O.findOne({_id:M},{projection:{users:1}});I.users&&I.users[z(552)](L=>{R[z(476)](L[z(460)],L)});K[z(552)](L=>{R.set(L[z(460)],L)});K=Array.from(R,L=>{[,L]=L;return Object.assign({},L)});yield O[z(451)]({_id:M},{$set:{users:K}})}E.result=
-z(501)})}}})};Q=function(G){G&&G[w(523)]&&(G[w(523)][w(447)](Ca),G.api.setModule(Da))};return Q[w(542)]=Y,Q.load=function(G,F){return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){let E=yield Y(G,F);return E?(E[w(510)][w(565)]=E[w(565)],E[w(510)]):!1})},Q[w(514)]=function(G,F,E){return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){if(G){if(yield Y(G))return{success:1}}else G=b.v4();let z=aa(E);!F[w(455)]&&(F.style=[]);!F.validations&&(F[w(536)]=[]);const M=F[w(399)],K=M[w(417)];
-for(let I=0;I<K;I++)ta(M[I]);return yield O[w(432)]({_id:G,status:1,user_id:z,created:(new Date)[w(497)](),updated:(new Date)[w(497)](),spreadsheet:F}),{success:1,guid:G}})},Q[w(405)]=function(G){return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){return 1===(yield O.deleteOne({_id:G})).deletedCount?{success:1}:{error:1}})},Q[w(431)]=function(G,F,E,z){return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){let M;const K=yield O[w(517)][w(459)]();K[w(488)]();try{let I=F[w(426)];
-if(Z[I]){F[w(436)]=F[w(427)][w(399)].findIndex(L=>L.options[w(529)]===F.worksheet);F.document=yield O[w(526)]({_id:G});let R=Z[I](F);R&&(Array[w(402)](R)?(R=R.map(L=>{var X=Object.assign({},L);L=void 0===L.$filter?{}:L.$filter;X=(delete X.$filter,X);return{updateOne:{filter:Object.assign({},{_id:G},L),update:X}}}),yield O[w(404)](R)):yield O.updateOne({_id:G},R))}M={success:1}}catch(I){console[w(433)](I),M={error:1,message:I},"function"===typeof z&&z(I)}M[w(433)]?yield K[w(406)]():yield K[w(520)]();
-K.endSession()})},Q[w(458)]=function(G,F,E,z){return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){let M;const K=yield O[w(517)][w(459)]();K[w(488)]();try{yield O.updateOne({_id:G},{$set:{spreadsheet:F}}),M={success:1}}catch(I){console[w(433)](I),M={error:1,message:I},typeof z===w(457)&&z(I)}M[w(433)]?yield K.abortTransaction():yield K.commitTransaction();K[w(477)]()})},Q})},8489:t=>{t[a0_0x2ae3(448)]={setCache:function(d){const a=a0_0x2ae3;let b=d[a(546)][0],g={$set:{}};return Object[a(468)](b)[a(552)](h=>
-{g.$set[a(475)+d[a(436)]+a(508)+h]=b[h]}),g}}},281:(t,d,a)=>{const {updateReferences:b,moveArrayItems:g,dataIsMatrix:h}=a(4130),v=function(u,c){const e=a0_0x2ae3;let l=u[e(546)][0];!Array[e(402)](l)&&(l=[l]);const q="spreadsheet.worksheets."+u[e(436)]+e(528);u=u[e(483)][e(510)].worksheets[u[e(436)]][e(537)];const k={},p=l[e(417)];for(let r=0;r<p;r++){const n=l[r],x=q+"."+n;u[n]?k[x+e(411)]=c:k[x]={visible:c}}return{$set:k}};t.exports={setWidth:function(u){const c=a0_0x2ae3;let [e,l]=u[c(546)];!Array[c(402)](e)&&
-(e=[e]);const q="spreadsheet.worksheets."+u[c(436)]+".columns";u=u[c(483)].spreadsheet.worksheets[u[c(436)]][c(537)];const k=Array[c(402)](l),p={},r=e[c(417)];for(let n=0;n<r;n++){const x=e[n],A=q+"."+x,D=k?l[n]:l;u[x]?p[A+c(547)]=D:p[A]={width:D}}return{$set:p}},hideColumn:function(){return v(...arguments,!1)},showColumn:function(){return v(...arguments,!0)},insertColumn:function(u){const c=a0_0x2ae3;var [e]=u[c(546)];e[c(516)]((x,A)=>x[c(507)]-A[c(507)]);const l=u[c(483)].spreadsheet[c(399)][u[c(436)]],
-q=l[c(428)];var k=h(q);const p=l[c(537)],r=e.length;for(let x=0;x<r;x++){var n=e[x];const A=n[c(507)];A>p.length?p[A]=n[c(543)]||{}:p.splice(A,0,n[c(543)]||{});const D=n[c(428)];n=n[c(543)]&&n[c(543)][c(495)]||A;const J=Math[c(563)](q[c(417)],l[c(498)][1]);for(let B=0;B<J;B++)if(!1===k)D&&typeof D[B]!==c(499)&&""!==D[B]&&(!q[B]&&(q[B]={}),q[B][n]=D[B]);else{let N=D&&typeof D[B];if(!q[B]){if("undefined"===typeof N||""===N)continue;q[B]=[]}const P=q[B];A<P.length?P[c(421)](A,0,N):P[A]=N}}k=c(475)+u[c(436)];
-e=[{$set:{[k+".minDimensions.0"]:Math[c(563)](l[c(498)][0]+r,e[r-1][c(507)]+1),[k+c(557)]:q,[k+c(528)]:p}}];return b(u,e),e},moveColumn:function(u){var c=a0_0x2ae3;const [e,l,q]=u[c(546)];var k=u.document[c(510)][c(399)][u[c(436)]],p=u.document[c(510)][c(399)][u[c(436)]][c(537)];g(p,e,l,q);const r=c(475)+u.worksheetIndex;p={[r+c(528)]:p};if(k[c(444)]){var n=k.footers,x=n[c(417)];for(var A=0;A<x;A++)g(n[A],e,l,q);p[r+".footers"]=n}k=k[c(428)];if(h(k)){n=k[c(417)];for(x=0;x<n;x++)(A=k[x])&&g(A,e,l,
-q);p[r+c(557)]=k}c=[{$set:p}];return b(u,c),c},deleteColumn:function(u){var c=a0_0x2ae3,[e]=u[c(546)];e[c(516)]((P,S)=>P-S);var l=[e[0],1],q=[],k=e[c(417)];for(var p=1;p<k;p++){var r=e[p];r===l[0]+l[1]?l[1]++:(q[c(471)](l),l=[r,1])}q.push(l);const n=u[c(483)].spreadsheet[c(399)][u[c(436)]];e=n.data;const x=e[c(417)],A=n[c(537)];l=h(e);const D=n[c(444)],J=D?D[c(417)]:0;p="spreadsheet.worksheets."+u[c(436)];r={};for(let P=q[c(417)]-1;-1<P;P--){const [S,T]=q[P],W=A.splice(S,T);if(D)for(var B=0;B<J;B++)D[B][c(421)](S,
-T);for(B=0;B<x;B++){var N=e[B];if(l)N&&N.splice(S,T);else if(!1===l){N=W[c(417)];for(let U=0;U<N;U++){const V=W[U];V&&V[c(495)]&&(r[p+c(496)+V]=!0)}}}}q={[p+c(528)]:A,[p+c(473)]:n[c(498)][0]-k};D&&(q[p+c(524)]=D);k={$set:q};l?q[p+c(557)]=e:!1===l&&(k[c(500)]=r);c=[k];return b(u,c),c}}},7169:t=>{t[a0_0x2ae3(448)]={setComments:function(d){const a=a0_0x2ae3;let b=d[a(546)][0],g={$set:{}};return Object.keys(b).forEach(h=>{g[a(462)][a(475)+d[a(436)]+a(512)+h]=b[h]}),g}}},7381:t=>{t[a0_0x2ae3(448)]={setConfig:function(d){const a=
-a0_0x2ae3;let b=d[a(546)][0],g=d.args[1];b=JSON[a(429)](b);let h={$set:{}};return g?Object[a(468)](b)[a(552)](v=>{h[a(462)][a(420)+v]=b[v]}):Object[a(468)](b)[a(552)](v=>{h[a(462)][a(475)+d[a(436)]+"."+v]=b[v]}),h}}},9651:(t,d,a)=>{d=a0_0x2ae3;const {dataIsMatrix:b}=a(4130);a=function(g){const h=a0_0x2ae3;var v=g.args[0],u=g.document[h(510)].worksheets[g[h(436)]];const c=u[h(428)];u=u[h(537)];const e=b(c),l=h(475)+g[h(436)]+h(557),q=new Set;g={};const k={},p=v[h(417)];for(let r=0;r<p;r++){const {y:n,
-x,value:A}=v[r],D=l+"."+n;!q[h(424)](n)&&(!c[n]&&(g[D]=e||"boolean"!==typeof e?[]:{}),q[h(494)](n));const J=e||typeof e!==h(479)?x:u[x]&&u[x].name||x;k[D+"."+J]=A}v=[];return 0!==Object.keys(g)[h(417)]&&v[h(471)]({$set:g}),v[h(471)]({$set:k}),console[h(487)](v),v};t[d(448)]={setValue:a,setFormula:a}},8016:t=>{t.exports={setDefinedNames:function(d){const a=a0_0x2ae3;[d]=d.args;const b={},g={},h=d[a(417)];for(let v=0;v<h;v++){const u=d[v],c=a(532)+u[a(505)];typeof u[a(504)]!==a(499)?b[c]=u[a(504)]:
-g[c]=""}return{$set:b,$unset:g}}}},9268:t=>{t[a0_0x2ae3(448)]={setFooter:function(d){const a=a0_0x2ae3;let b=d[a(546)][0],g={$set:{}};return g.$set["spreadsheet.worksheets."+d[a(436)]+a(524)]=b,g},setFooterValue:function(d){const a=a0_0x2ae3,[b,g,h]=d[a(546)];let v={$set:{}};return v[a(462)][a(475)+d[a(436)]+a(450)+g+"."+b]=h,v},resetFooter:function(d){const a=a0_0x2ae3;let b={$unset:{}};return b[a(500)][a(475)+d[a(436)]+a(524)]="",b}}},9373:t=>{t[a0_0x2ae3(448)]={setFreezeColumns:function(d){const a=
-a0_0x2ae3;let b=d[a(546)][0],g={$set:{}};return g.$set[a(475)+d[a(436)]+a(489)]=b,g}}},813:t=>{t[a0_0x2ae3(448)]={setFreezeRows:function(d){const a=a0_0x2ae3;let b=d.args[0],g={$set:{}};return g[a(462)][a(475)+d[a(436)]+a(469)]=b,g}}},4788:t=>{const d=function(a,b){const g=a0_0x2ae3,[h,v,u]=a[g(546)],c=g(475)+a[g(436)]+"."+b+"."+h;if(v){let e;return a[g(483)][g(510)][g(399)][a[g(436)]][b][h]?e={[c+g(533)]:v,[c+".state"]:u}:e={[c]:{group:v,state:u}},{$set:e}}return{$unset:{[c+g(533)]:"",[c+g(492)]:""}}};
-t.exports={setColumnGroup:function(a){return d(a,a0_0x2ae3(537))},setRowGroup:function(a){return d(a,"rows")}}},9922:t=>{t[a0_0x2ae3(448)]={setHeader:function(d){const a=a0_0x2ae3,[b,g]=d[a(546)],h=a(475)+d.worksheetIndex+a(409)+b,v={};return d[a(483)].spreadsheet[a(399)][d[a(436)]][a(537)][b]?v[h+a(412)]=g:v[h]={title:g},{$set:v}}}},7255:t=>{t[a0_0x2ae3(448)]={setMedia:function(d){const a=a0_0x2ae3;var b=d[a(546)][0];!Array[a(402)](b)&&(b=[b]);const g={},h=[],v=[];let u=d.document[a(510)][a(399)][d[a(436)]].media;
-d=a(475)+d[a(436)]+a(435);const c=b[a(417)];for(let l=0;l<c;l++){const q=b[l];if(1!==Object[a(468)](q)[a(417)]){var e=u[a(467)](k=>k.id===q.id);if(-1<e){const k=Object[a(408)](q);e=d+"."+e;const p=k[a(417)];for(let r=0;r<p;r++){const n=k[r];g[e+"."+n[0]]=n[1]}}else v[a(471)](q)}else h.push(q.id)}b={};return 0!==Object[a(468)](g)[a(417)]&&(b[a(462)]=g),0!==v[a(417)]&&(b[a(410)]={[d]:{$each:v}}),0!==h[a(417)]&&(b.$pull={[d]:{id:{$in:h}}}),b}}},1919:t=>{t[a0_0x2ae3(448)]={setMerge:function(d){const a=
-a0_0x2ae3;let b=d.args[0],g={$set:{}};return Object[a(468)](b)[a(552)](h=>{g[a(462)][a(475)+d[a(436)]+a(513)+h]=b[h]}),g},removeMerge:function(d){var a=a0_0x2ae3,b=d.args[0];b=Object[a(468)](b);const g=b[a(417)],h={};d=a(475)+d[a(436)]+a(446);for(a=0;a<g;a++)h[d+"."+b[a]]="";return{$unset:h}}}},9602:t=>{t[a0_0x2ae3(448)]={setMeta:function(d){const a=a0_0x2ae3;let b=d[a(546)][0],g={$set:{}};return Object[a(468)](b)[a(552)](h=>{g[a(462)][a(475)+d.worksheetIndex+a(413)+h]=b[h]}),g},resetMeta:function(d){const a=
-a0_0x2ae3;let b=d[a(546)][0],g={$unset:{}};return b?b[a(552)](h=>{g.$unset[a(475)+d[a(436)]+".meta."+h]=""}):g[a(500)][a(475)+d[a(436)]+a(430)]="",g}}},7012:t=>{t[a0_0x2ae3(448)]={setName:function(d){const a=a0_0x2ae3;d=d[a(546)][0];let b={$set:{}};return b[a(462)]["spreadsheet.name"]=d,b}}},1964:t=>{t.exports={setNestedHeaders:function(d){const a=a0_0x2ae3;let b=d[a(546)][0],g={$set:{}};return g[a(462)][a(475)+d[a(436)]+a(470)]=b,g},setNestedCell:function(d){const a=a0_0x2ae3,[b]=d.args,g={};d=a(475)+
-d[a(436)]+a(470);const h=b[a(417)];for(let u=0;u<h;u++){var v=b[u];const c=Object[a(408)](v[a(530)]);v=d+"."+v.y+"."+v.x;const e=c[a(417)];for(let l=0;l<e;l++){const [q,k]=c[l];g[v+"."+q]=k}}return{$set:g}},resetNestedHeaders:function(d){const a=a0_0x2ae3;let b={$unset:{}};return b[a(500)][a(475)+d.worksheetIndex+a(470)]="",b}}},7603:(t,d,a)=>{d=a0_0x2ae3;const {updateReferences:b}=a(4130);t[d(448)]={orderBy:function(g){var h=a0_0x2ae3,v=g.args[2],u=g[h(483)][h(510)][h(399)][g.worksheetIndex];const c=
-u[h(428)],e=u[h(556)];u=[];const l=[],q=v.length;for(let k=0;k<q;k++){const p=v[k];u[h(471)](c[p]);l[h(471)](e[p])}v=h(475)+g[h(436)];h=[{$set:{[v+h(557)]:u,[v+h(449)]:l}}];return b(g,h),h}}},8302:(t,d,a)=>{const {getColumnNameFromCoords:b}=a(1507);t.exports={setProperty:function(g){const h=a0_0x2ae3;let v=g[h(546)][0];const u={};var c="spreadsheet.worksheets."+g[h(436)];g=c+h(528);c+=h(544);const e=v[h(417)];for(let q=0;q<e;q++){var l=void 0;let k=v[q];typeof k.y===h(499)||null===k.y?l=g+"."+k.x:
-(l=b(k.x,k.y),l=c+"."+l);u[l]=typeof k[h(504)]!==h(499)?k[h(504)]:null}return{$set:u}},updateProperty:function(g){const h=a0_0x2ae3;var v=g[h(546)][0],u=h(475)+g[h(436)];const c=u+h(544);u+=h(528);const e=g[h(483)].spreadsheet[h(399)][g.worksheetIndex].columns;g={};const l={},q=v[h(417)];for(let n=0;n<q;n++){var k=v[n];const x=Object[h(408)](k.value);if("undefined"===typeof k.y||null===k.y){var p=u+"."+k.x;if(e[k.x]){k=x.length;for(var r=0;r<k;r++){const [A,D]=x[r];l[p+"."+A]=D}}else g[p]=k[h(504)],
-e[k.x]={}}else for(p=c+"."+b(k.x,k.y),k=x[h(417)],r=0;r<k;r++){const [A,D]=x[r];l[p+"."+A]=D}}v=[];return 0!==Object[h(468)](g)[h(417)]&&v[h(471)]({$set:g}),0!==Object.keys(l)[h(417)]&&v.push({$set:l}),v}}},5847:(t,d,a)=>{d=a0_0x2ae3;const {updateReferences:b,dataIsMatrix:g,moveArrayItems:h}=a(4130),v=function(c,e){const l=a0_0x2ae3;let q=c[l(546)][0];!Array[l(402)](q)&&(q=[q]);const k={},p="spreadsheet.worksheets."+c[l(436)]+l(449);c=c[l(483)][l(510)][l(399)][c[l(436)]][l(556)]||[];const r=q.length;
-for(let n=0;n<r;n++){const x=q[n],A=p+"."+x;c[x]?k[A+l(411)]=e:k[A]={visible:e}}return{$set:k}},u=function(c,e){const l={},q=c[a0_0x2ae3(417)];for(let k=0;k<q;k++)l[e[k]&&e[k].name||k]=c[k];return l};t[d(448)]={setHeight:function(c){const e=a0_0x2ae3;let [l,q]=c[e(546)];!Array[e(402)](l)&&(l=[l]);const k={},p=Array.isArray(q),r=e(475)+c.worksheetIndex+e(449);c=c[e(483)][e(510)][e(399)][c[e(436)]][e(556)]||[];const n=l.length;for(let x=0;x<n;x++){const A=l[x],D=r+"."+A,J=p?q[x]:q;c[A]?k[D+e(515)]=
-J:k[D]={height:J}}return{$set:k}},insertRow:function(c){const e=a0_0x2ae3;var [l]=c[e(546)];l[e(516)]((J,B)=>J[e(486)]-B[e(486)]);const q=c.document.spreadsheet.worksheets[c[e(436)]],k=q[e(428)];let p=k[e(417)];const r=g(k),n=e(475)+c[e(436)],x=q[e(537)],A=q[e(556)],D=l[e(417)];for(let J=0;J<D;J++){const {row:B,data:N,options:P}=l[J],S=!1===r&&Array.isArray(N)?u(N,x):N;B>p?(k[B]=S,p=B+1):(k.splice(B,0,S),p++);B>A[e(417)]?A[B]=P:A.splice(B,0,P)}l=[{$set:{[n+".data"]:k,[n+e(449)]:A,[n+e(473)]:Math[e(563)](q[e(498)][1]+
-D,l[D-1][e(486)]+1)}}];return b(c,l),l},hideRow:function(c){return v(c,!1)},showRow:function(c){return v(c,!0)},moveRow:function(c){var e=a0_0x2ae3;const [l,q,k]=c[e(546)];var p=c.document[e(510)][e(399)][c[e(436)]];const r=p[e(556)];h(r,l,q,k);p=p[e(428)];h(p,l,q,k);const n=e(475)+c[e(436)];e=[{$set:{[n+e(557)]:p,[n+".rows"]:r}}];return b(c,e),e},deleteRow:function(c){var e=a0_0x2ae3,[l]=c[e(546)];l[e(516)]((x,A)=>x-A);var q=[l[0],1],k=[];const p=l[e(417)];for(var r=1;r<p;r++){var n=l[r];n===q[0]+
-q[1]?q[1]++:(k[e(471)](q),q=[n,1])}k.push(q);l=c[e(483)][e(510)][e(399)][c.worksheetIndex];q=l[e(428)];r=l[e(556)];for(n=k[e(417)]-1;-1<n;n--){const [x,A]=k[n];q[e(421)](x,A);r[e(421)](x,A)}k="spreadsheet.worksheets."+c[e(436)];e=[{$set:{[k+e(557)]:q,[k+e(449)]:r,[k+e(473)]:l[e(498)][1]-p}}];return b(c,e),e},setRowId:function(c){const e=a0_0x2ae3,l=c[e(483)][e(510)][e(399)][c[e(436)]][e(556)],q="spreadsheet.worksheets."+c[e(436)]+e(449),k={};c=Object[e(408)](c[e(546)][0]);const p=c[e(417)];for(let r=
-0;r<p;r++){const [n,x]=c[r],A=q+"."+n;l[n]?k[A+e(434)]=x:k[A]={id:x}}return{$set:k}}}},9746:t=>{t[a0_0x2ae3(448)]={setStyle:function(d){const a=a0_0x2ae3;return{$set:{[a(502)]:d[a(427)].config[a(455)],["spreadsheet.worksheets."+d[a(436)]+a(491)]:d[a(427)][a(399)][d[a(436)]][a(416)](null,!0)}}},resetStyle:function(d){const a=a0_0x2ae3;return{$set:{[a(475)+d.worksheetIndex+a(491)]:d.instance[a(399)][d.worksheetIndex][a(416)](null,!0)}}}}},9195:t=>{t[a0_0x2ae3(448)]={setValidations:function(d){const a=
-a0_0x2ae3;let b={$set:{}};return d[a(546)][0][a(552)](g=>{b[a(462)][a(548)+g.index]=g[a(504)]}),b}}},6091:t=>{const d=function(a){const b=a0_0x2ae3;!a[b(506)]&&(a[b(506)]=[]);!a[b(428)]&&(a[b(428)]=[]);!a.rows&&(a[b(556)]=[]);!a[b(537)]&&(a.columns=[])};t[a0_0x2ae3(448)]={validateWorksheet:d,createWorksheet:function(a){const b=a0_0x2ae3;var g=a[b(546)][0];a=a.args[1];d(g);g={$push:{"spreadsheet.worksheets":{$each:[g]}}};return typeof a!==b(499)&&(g[b(410)][b(400)][b(561)]=a),g},deleteWorksheet:function(a){const b=
-a0_0x2ae3;var g=a[b(546)][0];a={};a[b(475)+g]=1;g={};return g[b(400)]=null,[{$unset:a},{$pull:g}]},renameWorksheet:function(a){const b=a0_0x2ae3;let g=a[b(546)][0];a=a[b(546)][1];let h={$set:{}};return h[b(462)][b(475)+g+b(480)]=a,h},moveWorksheet:function(a){var b=a0_0x2ae3,g=a[b(546)][0];let h=a[b(546)][1];a=a[b(483)][b(510)][b(399)][g];if(!a)throw Error(b(481));g={};g[b(400)]=a;b={};return b["spreadsheet.worksheets"]={$each:[a],$position:h},[{$pull:g},{$push:b}]},setWorksheetState:function(a){const b=
-a0_0x2ae3;let [g,h]=a[b(546)];a={$set:{}};return a[b(462)][b(475)+g+b(541)]=h,a}}},1021:(t,d,a)=>{const b=a0_0x2ae3,{S3Client:g,GetObjectCommand:h,ListObjectsV2Command:v,PutObjectCommand:u,DeleteObjectCommand:c}=a(5725),e=a(4333),l=/^data:image\/(\w+);base64,/;class q{constructor(k){const p=a0_0x2ae3;this[p(543)]=k;this.s3=new g({region:k[p(397)],credentials:{accessKeyId:k[p(453)],secretAccessKey:k.secret}})}get(k){const p=this;return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){const r=
-a0_0x2ae3,n=new h({Bucket:p[r(543)][r(437)],Key:k});return yield(x=>new Promise((A,D)=>{const J=[];x.on("data",B=>J.push(B));x.on(r(433),D);x.on(r(535),()=>A(Buffer.concat(J)))}))((yield p.s3[r(407)](n))[r(472)])})}getByPrefix(k){const p=this;return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){const r=a0_0x2ae3;var n=new v({Bucket:p[r(543)][r(437)],Prefix:k});n=yield p.s3[r(407)](n);return n[r(493)]&&0<n.Contents.length?n[r(493)]:[]})}[b(441)](k,p){const r=this;return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){const n=
-new u({Bucket:r[b(543)][b(437)],Key:k,Body:p});return yield r.s3.send(n)})}[b(540)](k,p){const r=this;return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){var n=p.match(l);if(!n)throw Error("did not match data URI with image data");var x=p[b(490)](p.indexOf(",")+1);n=n[1][b(465)]();if(![b(440),b(403),b(484),"png","svg"].includes(n))throw Error(b(509));x=Buffer[b(401)](x,b(415));n=k+b(439)+e.v4()+"."+n;return yield r[b(441)](n,x),b(555)+n})}[b(519)](k){const p=this;return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){const r=
-k[b(490)](k.lastIndexOf(".")+1);try{const n=new h({Bucket:p.options[b(437)],Key:k}),x=yield p.s3.send(n);return{extension:r,file:yield(A=>new Promise((D,J)=>{const B=[];A.on(b(428),N=>B[b(471)](N));A.on(b(433),J);A.on(b(535),()=>D(Buffer[b(482)](B)))}))(x.Body)}}catch(n){if(n.name===b(554))throw Error("NoSuchKey");throw n;}})}[b(456)](k){const p=this;return $jscomp.asyncExecutePromiseGeneratorFunction(function*(){const r=new c({Bucket:p[b(543)][b(437)],Key:k});return p.s3[b(407)](r)})}}t[b(448)]=
-q},4130:t=>{t[a0_0x2ae3(448)]={updateReferences:function(d,a){const b=a0_0x2ae3,g={};[b(455),b(452),b(463),b(550),b(511)][b(552)](h=>{let v=d[b(427)][b(399)][d[b(436)]][b(543)][h];v&&0<Object.keys(v)[b(417)]&&(g[b(475)+d.worksheetIndex+"."+h]=v)});a[b(471)]({$set:g})},moveArrayItems:function(d,a,b,g){const h=a0_0x2ae3;for(a=d.splice(a,g);a[h(417)]<g;)a[h(471)](null);for(;d.length<b;)d[h(471)](null);d[h(421)](b,0,...a)},dataIsMatrix:function(d){let a=d.length;for(let b=0;b<a;b++)if(d[b])return Array.isArray(d[b]);
-return null}}},5725:t=>{const d=a0_0x2ae3;t[d(448)]=require(d(531))},1127:t=>{const d=a0_0x2ae3;t[d(448)]=require(d(422))},9884:t=>{t.exports=require(a0_0x2ae3(549))},4333:t=>{const d=a0_0x2ae3;t[d(448)]=require(d(425))}},C={},H=f(5461);module[m(448)]=H})();
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 44
+(module, __unused_webpack_exports, __webpack_require__) {
+
+const uuid = __webpack_require__(333);
+const jwt = __webpack_require__(127);
+const { MongoClient } = __webpack_require__(884);
+
+const { setWidth, hideColumn, showColumn, insertColumn, moveColumn, deleteColumn } = __webpack_require__(802);
+const { setHeight, hideRow, showRow, moveRow, insertRow, deleteRow, setRowId } = __webpack_require__(954);
+const { setMeta, resetMeta } = __webpack_require__(657);
+const { setComments } = __webpack_require__(998);
+const { setFreezeColumns } = __webpack_require__(348);
+const { setFreezeRows } = __webpack_require__(530);
+const { setFooter, setFooterValue, resetFooter } = __webpack_require__(295);
+const { setHeader } = __webpack_require__(701);
+const { setNestedHeaders, resetNestedHeaders, setNestedCell } = __webpack_require__(349);
+const { setMerge, removeMerge } = __webpack_require__(562);
+const { setCache } = __webpack_require__(404);
+const { setStyle, resetStyle } = __webpack_require__(315);
+const { setProperty, updateProperty } = __webpack_require__(381);
+const { setValidations } = __webpack_require__(774);
+const { setMedia } = __webpack_require__(502);
+const { createWorksheet, deleteWorksheet, renameWorksheet, moveWorksheet,setWorksheetState, validateWorksheet } = __webpack_require__(666);
+const { setValue, setFormula } = __webpack_require__(736);
+const { setColumnGroup, setRowGroup } = __webpack_require__(485);
+const { setDefinedNames } = __webpack_require__(227);
+const { setConfig } = __webpack_require__(194);
+const { orderBy } = __webpack_require__(574);
+
+;(function(global, factory) {
+     true ? module.exports = factory() :
+    0;
+}(this, (function() {
+
+    const url = process.env.MONGODB_URI || process.env.MONGODB_URL || 'mongodb://mongodb';
+    const dbName = process.env.MONGODB_DB_NAME || 'jspreadsheet';
+    const collectionName = process.env.MONGODB_COLLECTION_NAME || 'documents';
+
+    console.log('here -------------->', { url, dbName, collectionName })
+
+    const client = new MongoClient(url);
+
+    client.connect();
+
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+    const methods = {
+        setConfig,
+        setWidth,
+        hideColumn,
+        showColumn,
+        insertColumn,
+        moveColumn,
+        deleteColumn,
+        setHeight,
+        hideRow,
+        showRow,
+        moveRow,
+        setMeta,
+        resetMeta,
+        setComments,
+        setFreezeColumns,
+        setFreezeRows,
+        setFooter,
+        setFooterValue,
+        resetFooter,
+        setHeader,
+        setMerge,
+        removeMerge,
+        setColumnGroup,
+        setRowGroup,
+        setNestedHeaders,
+        setNestedCell,
+        resetNestedHeaders,
+        setCache,
+        setValidations,
+        setStyle,
+        resetStyle,
+        setProperty,
+        updateProperty,
+        setMedia,
+        createWorksheet,
+        deleteWorksheet,
+        renameWorksheet,
+        moveWorksheet,
+        setWorksheetState,
+        setValue,
+        setFormula,
+        setDefinedNames,
+        insertRow,
+        deleteRow,
+        setRowId,
+        orderBy,
+    }
+
+    const getUserId = function(query) {
+        // Decode token
+        let user_id = null;
+        if (query && query.token) {
+            let info = jwt.decode(query.token);
+            if (info) {
+                user_id = info.sub;
+            }
+        }
+        return user_id;
+    }
+
+    const get = async function(guid, query) {
+        let config = await collection.findOne({ _id: guid });
+        if (! config) {
+            return false;
+        }
+        return config;
+    }
+
+    const load = async function(guid, query) {
+        let config = await get(guid, query);
+        if (! config) {
+            return false;
+        }
+        // Make sure the owner is sent to the frontend
+        config.spreadsheet.user_id = config.user_id
+        return config.spreadsheet;
+    }
+
+    const create = async function(guid, config, query) {
+        if (guid) {
+            const result = await get(guid)
+            if (result) {
+                return { success: 1 };
+            }
+        } else {
+            guid = uuid.v4();
+        }
+
+        // Decode token
+        let user_id = getUserId(query);
+
+        if (! config.style) {
+            config.style = [];
+        }
+        if (! config.validations) {
+            config.validations = [];
+        }
+
+        const worksheets = config.worksheets;
+        const worksheetsLength = worksheets.length;
+        for (let worksheetIndex = 0; worksheetIndex < worksheetsLength; worksheetIndex++) {
+            const worksheet = worksheets[worksheetIndex];
+
+            validateWorksheet(worksheet);
+        }
+
+        // Create a new spreadsheet
+        await collection.insertOne({
+            _id: guid,
+            status: 1,
+            user_id: user_id,
+            created: new Date().toISOString(),
+            updated: new Date().toISOString(),
+            spreadsheet: config,
+        });
+
+        return { success: 1, guid: guid };
+    }
+
+    const destroy = async function(guid) {
+        const result = await collection.deleteOne({ _id: guid });
+        if (result.deletedCount === 1) {
+            return { success: 1 };
+        } else {
+            return { error: 1 };
+        }
+    }
+
+    // Queue per guid to ensure sequential execution
+    const queues = new Map();
+
+    const processQueue = async function(guid) {
+        const queue = queues.get(guid);
+        if (!queue || queue.processing || queue.items.length === 0) {
+            if (queue && !queue.processing && queue.items.length === 0) {
+                queues.delete(guid);
+            }
+            return;
+        }
+
+        queue.processing = true;
+        const item = queue.items.shift();
+
+        const result = await executeChange(guid, item.obj, item.query, item.onerror);
+
+        item.resolve();
+
+        if (result.error) {
+            // Clear remaining items from the queue
+            const remainingItems = queue.items.splice(0);
+            remainingItems.forEach(i => i.resolve());
+            // Sync the instance state to the database
+            const config = item.obj.instance.getConfig();
+            await replace(guid, config);
+        }
+
+        queue.processing = false;
+
+        if (queue.items.length === 0) {
+            queues.delete(guid);
+        } else {
+            processQueue(guid);
+        }
+    }
+
+    const executeChange = async function(guid, obj, query, onerror) {
+        try {
+            let method = obj.method;
+            // Get updates
+            if (methods[method]) {
+                // Current worksheet index
+                obj.worksheetIndex = obj.instance.worksheets.findIndex(worksheet => worksheet.options.worksheetId === obj.worksheet)
+                // Current document
+                obj.document = await collection.findOne({ _id: guid });
+                // Execute controller
+                let changes = methods[method](obj);
+                // Any changes to be executed
+                if (changes) {
+                    if (Array.isArray(changes)) {
+                        // Bulk updates
+                        changes = changes.map(({$filter = {}, ...change}) => {
+                            return {
+                                updateOne: {
+                                    filter: { _id: guid, ...$filter },
+                                    update: change
+                                }
+                            };
+                        });
+                        await collection.bulkWrite(changes);
+                    } else {
+                        await collection.updateOne({ _id: guid }, changes);
+                    }
+                }
+            }
+            return { success: 1 };
+        } catch (error) {
+            console.error(error);
+
+            if (typeof(onerror) === 'function') {
+                onerror(error);
+            }
+
+            return { error: 1, message: error };
+        }
+    }
+
+    const change = function(guid, obj, query, onerror) {
+        return new Promise((resolve) => {
+            if (!queues.has(guid)) {
+                queues.set(guid, { processing: false, items: [] });
+            }
+
+            const queue = queues.get(guid);
+            queue.items.push({ obj, query, onerror, resolve });
+            processQueue(guid);
+        });
+    }
+
+    const replace = async function(guid, config, query, onerror) {
+        try {
+            await collection.updateOne({ _id: guid }, { $set: { spreadsheet: config } });
+            return { success: 1 };
+        } catch (error) {
+            console.error(error);
+
+            if (typeof(onerror) === 'function') {
+                onerror(error);
+            }
+
+            return { error: 1, message: error };
+        }
+    }
+
+    const list = async function(query) {
+        // Decode token to get user ID
+        let user_id = getUserId(query);
+        // Get all documents for the user with the specified fields
+        const cursor = await collection.find({ user_id: user_id }, { projection: { guid: 1, 'spreadsheet.name': 1, updated: 1, 'spreadsheet.privacy': 1 } });
+        // Set the result
+        let sheets = await cursor.toArray();
+        if (sheets.length) {
+            sheets.forEach((v) => {
+                v.guid = v._id;
+                v.privacy = v.spreadsheet.privacy ? 1 : 0;
+                v.name = v.spreadsheet.name;
+                delete v.spreadsheet;
+            });
+        }
+        return sheets;
+    }
+
+    const setUsers = async function(guid, data) {
+        return await collection.updateOne({ _id: guid }, {$set: { users: data }});
+    }
+
+    const getUsers = async function(guid) {
+        let result = await collection.findOne({ _id: guid }, { projection: { users: 1 } });
+        return result.users || [];
+    }
+
+    const setPrompts = async function(guid, data) {
+        return await collection.updateOne({ _id: guid }, {$set: { prompts: data }});
+    }
+
+    const getPrompts = async function(guid) {
+        let result = await collection.findOne({ _id: guid }, { projection: { prompts: 1 } });
+        return result.prompts || [];
+    }
+
+
+    /**
+     * Create a plugin object
+     */
+    let Extension = function(options) {
+    }
+
+    Extension.get = get;
+    Extension.list = list;
+    Extension.load = load;
+    Extension.create = create;
+    Extension.destroy = destroy;
+    Extension.change = change;
+    Extension.replace = replace;
+    Extension.getUsers = getUsers;
+    Extension.setUsers = setUsers;
+    Extension.getPrompts = getPrompts;
+    Extension.setPrompts = setPrompts;
+
+    return Extension;
+
+})));
+
+
+/***/ },
+
+/***/ 404
+(module) {
+
+const setCache = function(obj) {
+    let cacheObject = obj.args[0];
+    let changes = { $set: {} };
+    Object.keys(cacheObject).forEach((cell) => {
+        changes.$set[`spreadsheet.worksheets.${obj.worksheetIndex}.cache.${cell}`] = cacheObject[cell];
+    });
+    return changes;
+}
+
+module.exports = {
+    setCache,
+}
+
+
+/***/ },
+
+/***/ 802
+(module, __unused_webpack_exports, __webpack_require__) {
+
+const { updateReferences, moveArrayItems, dataIsMatrix } = __webpack_require__(191);
+
+const setWidth = function(obj) {
+    let [columns, widths] = obj.args;
+
+    if (! Array.isArray(columns)) {
+        columns = [columns];
+    }
+
+    const columnsPath = `spreadsheet.worksheets.${obj.worksheetIndex}.columns`;
+
+    const savedColumns = obj.document.spreadsheet.worksheets[obj.worksheetIndex].columns;
+
+    const widthsIsAnArray = Array.isArray(widths);
+
+    const set = {};
+
+    const columnsLength = columns.length;
+    for (let index = 0; index < columnsLength; index++) {
+        const column = columns[index];
+
+        const columnPath = `${columnsPath}.${column}`;
+
+        const width = widthsIsAnArray ? widths[index] : widths;
+
+        if (savedColumns[column]) {
+            set[`${columnPath}.width`] = width;
+        } else {
+            set[columnPath] = {
+                width
+            };
+        }
+    }
+
+    return {
+        $set: set
+    };
+}
+
+const visibility = function(obj, state) {
+    let columns = obj.args[0];
+
+    if (! Array.isArray(columns)) {
+        columns = [columns];
+    }
+
+    const columnsPath = `spreadsheet.worksheets.${obj.worksheetIndex}.columns`;
+
+    const savedColumns = obj.document.spreadsheet.worksheets[obj.worksheetIndex].columns;
+
+    const set = {};
+
+    const columnsLength = columns.length;
+    for (let i = 0; i < columnsLength; i++) {
+        const column = columns[i];
+
+        const columnPath = `${columnsPath}.${column}`;
+
+        if (savedColumns[column]) {
+            set[`${columnPath}.visible`] = state;
+        } else {
+            set[columnPath] = {
+                visible: state
+            };
+        }
+    }
+
+    return {
+        $set: set
+    };
+}
+
+const hideColumn = function() {
+    return visibility(...arguments, false);
+}
+
+const showColumn = function() {
+    return visibility(...arguments, true);
+}
+
+const insertColumn = function(obj) {
+    const [columns] = obj.args;
+
+    columns.sort((a, b) => a.column - b.column);
+
+    const worksheet = obj.document.spreadsheet.worksheets[obj.worksheetIndex];
+
+    const currentData = worksheet.data;
+
+    const isMatrix = dataIsMatrix(currentData);
+
+    const currentColumns = worksheet.columns;
+
+    const columnsLength = columns.length;
+
+    for (let index = 0; index < columnsLength; index++) {
+        const column = columns[index];
+
+        const columnIndex = column.column;
+
+        if (columnIndex > currentColumns.length) {
+            currentColumns[columnIndex] = column.options || {};
+        } else {
+            currentColumns.splice(columnIndex, 0, column.options || {});
+        }
+
+        const columnData = column.data;
+
+        const columnName = (column.options && column.options.name) || columnIndex;
+
+        const numOfRows = Math.max(currentData.length, worksheet.minDimensions[1]);
+
+        for (let rowIndex = 0; rowIndex < numOfRows; rowIndex++) {
+            if (isMatrix === false) {
+                if (!columnData || typeof columnData[rowIndex] === 'undefined' || columnData[rowIndex] === '') {
+                    continue;
+                }
+
+                if (!currentData[rowIndex]) {
+                    currentData[rowIndex] = {};
+                }
+
+                currentData[rowIndex][columnName] = columnData[rowIndex];
+            } else {
+                let cellValue = columnData && columnData[rowIndex];
+
+                if (!currentData[rowIndex]) {
+                    if (typeof cellValue === 'undefined' || cellValue === '') {
+                        continue;
+                    }
+
+                    currentData[rowIndex] = [];
+                }
+
+                const row = currentData[rowIndex];
+
+                if (columnIndex < row.length) {
+                    row.splice(columnIndex, 0, cellValue);
+                } else {
+                    row[columnIndex] = cellValue;
+                }
+            }
+        }
+    }
+
+    const worksheetPath = `spreadsheet.worksheets.${obj.worksheetIndex}`;
+
+    const set = {
+        [`${worksheetPath}.minDimensions.0`]: Math.max(worksheet.minDimensions[0] + columnsLength, columns[columnsLength - 1].column + 1),
+        [`${worksheetPath}.data`]: currentData,
+        [`${worksheetPath}.columns`]: currentColumns,
+    };
+
+    const changes = [{
+        $set: set
+    }];
+
+    // Update references from other properties
+    updateReferences(obj, changes);
+
+    return changes;
+}
+
+const moveColumn = function (obj) {
+    const [from, to, quantity] = obj.args;
+
+    const worksheet = obj.document.spreadsheet.worksheets[obj.worksheetIndex];
+    const columns = obj.document.spreadsheet.worksheets[obj.worksheetIndex].columns;
+
+    moveArrayItems(columns, from, to, quantity);
+
+    const worksheetPath = `spreadsheet.worksheets.${obj.worksheetIndex}`;
+
+    const set = {
+        [`${worksheetPath}.columns`]: columns,
+    };
+
+    if (worksheet.footers) {
+        const footers = worksheet.footers;
+
+        const footersLength = footers.length;
+        for (let y = 0; y < footersLength; y++) {
+            const footerRow = footers[y];
+
+            moveArrayItems(footerRow, from, to, quantity);
+        }
+
+        set[`${worksheetPath}.footers`] = footers;
+    }
+
+    const data = worksheet.data;
+    if (dataIsMatrix(data)) {
+        const currentDataLength = data.length;
+        for (let y = 0; y < currentDataLength; y++) {
+            const row = data[y];
+
+            if (row) {
+                moveArrayItems(row, from, to, quantity);
+            }
+        }
+
+        set[`${worksheetPath}.data`] = data;
+    }
+
+    const changes = [{
+        $set: set,
+    }];
+
+    // Update references from other properties
+    updateReferences(obj, changes);
+
+    return changes;
+}
+
+const deleteColumn = function (obj) {
+    const [columnsToDelete] = obj.args;
+
+    columnsToDelete.sort((a, b) => a - b);
+
+    let lastSimplifieRemoval = [columnsToDelete[0], 1];
+
+    const simplifiedColumnsToDelete = [];
+
+    const length = columnsToDelete.length;
+    for (let i = 1; i < length; i++) {
+        const columnIndex = columnsToDelete[i];
+
+        if (columnIndex === lastSimplifieRemoval[0] + lastSimplifieRemoval[1]) {
+            lastSimplifieRemoval[1]++;
+        } else {
+            simplifiedColumnsToDelete.push(lastSimplifieRemoval);
+
+            lastSimplifieRemoval = [columnIndex, 1];
+        }
+    }
+
+    simplifiedColumnsToDelete.push(lastSimplifieRemoval);
+
+    const worksheet = obj.document.spreadsheet.worksheets[obj.worksheetIndex];
+
+    const currentData = worksheet.data;
+    const currentDataLength = currentData.length;
+
+    const currentColumns = worksheet.columns;
+
+    const isMatrix = dataIsMatrix(currentData);
+
+    const footers = worksheet.footers;
+    const footersLength = footers ? footers.length : 0;
+
+    const worksheetPath = `spreadsheet.worksheets.${obj.worksheetIndex}`;
+
+    const unset = {};
+
+    for (let i = simplifiedColumnsToDelete.length - 1; i > -1; i--) {
+        const [removalIndex, numOfRemovedItems] = simplifiedColumnsToDelete[i];
+
+        const removedColumns = currentColumns.splice(removalIndex, numOfRemovedItems);
+
+        if (footers) {
+            for (let y = 0; y < footersLength; y++) {
+                const footerRow = footers[y];
+
+                footerRow.splice(removalIndex, numOfRemovedItems);
+            }
+        }
+
+        for (let y = 0; y < currentDataLength; y++) {
+            const row = currentData[y];
+
+            if (isMatrix) {
+                if (row) {
+                    row.splice(removalIndex, numOfRemovedItems);
+                }
+            } else if (isMatrix === false) {
+                const removedColumnsLength = removedColumns.length;
+                for (let removedColumnIndex = 0; removedColumnIndex < removedColumnsLength; removedColumnIndex++) {
+                    const removedColumn = removedColumns[removedColumnIndex];
+
+                    if (removedColumn && removedColumn.name) {
+                        unset[`${worksheetPath}.data.y.${removedColumn}`] = true;
+                    }
+                }
+            }
+        }
+    }
+
+    const set = {
+        [`${worksheetPath}.columns`]: currentColumns,
+        [`${worksheetPath}.minDimensions.0`]: worksheet.minDimensions[0] - length,
+    };
+
+    if (footers) {
+        set[`${worksheetPath}.footers`] = footers;
+    }
+
+    let change = {
+        $set: set,
+    };
+
+    if (isMatrix) {
+        set[`${worksheetPath}.data`] = currentData;
+    } else if (isMatrix === false) {
+        change['$unset'] = unset;
+    }
+
+    const changes = [change];
+
+    // Update references from other properties
+    updateReferences(obj, changes);
+
+    return changes;
+}
+
+module.exports = {
+    setWidth,
+    hideColumn,
+    showColumn,
+    insertColumn,
+    moveColumn,
+    deleteColumn,
+}
+
+
+/***/ },
+
+/***/ 998
+(module) {
+
+const setComments = function(obj) {
+    let comments = obj.args[0];
+
+    let changes = {
+        $set: {}
+    };
+
+    Object.keys(comments).forEach(key => {
+        changes.$set[`spreadsheet.worksheets.${obj.worksheetIndex}.comments.${key}`] = comments[key];
+    });
+
+    return changes;
+}
+
+module.exports = {
+    setComments,
+}
+
+
+/***/ },
+
+/***/ 194
+(module) {
+
+const setConfig = function(obj) {
+    let config = obj.args[0];
+    let scope = obj.args[1];
+    config = JSON.parse(config);
+    let changes = {$set: {}};
+
+    if (scope) {
+        Object.keys(config).forEach((prop) => {
+            changes.$set[`spreadsheet.${prop}`] = config[prop];
+        });
+    } else {
+        Object.keys(config).forEach((prop) => {
+            changes.$set[`spreadsheet.worksheets.${obj.worksheetIndex}.${prop}`] = config[prop];
+        });
+    }
+
+    return changes;
+}
+
+module.exports = {
+    setConfig,
+}
+
+
+/***/ },
+
+/***/ 736
+(module, __unused_webpack_exports, __webpack_require__) {
+
+const { dataIsMatrix } = __webpack_require__(191);
+
+const setValue = function(obj) {
+    const valueChanges = obj.args[0];
+
+    const worksheet = obj.document.spreadsheet.worksheets[obj.worksheetIndex];
+
+    const currentData = worksheet.data;
+    const columns = worksheet.columns;
+
+    const isMatrix = dataIsMatrix(currentData);
+
+    const dataPath = `spreadsheet.worksheets.${obj.worksheetIndex}.data`;
+
+    const accessedRows = new Set();
+
+    const insertRows = {};
+    const setCellValues = {};
+
+    const valueChangesLength = valueChanges.length;
+    for (let i = 0; i < valueChangesLength; i++) {
+        const { y, x, value } = valueChanges[i];
+
+        const rowPath = `${dataPath}.${y}`;
+
+        if (!accessedRows.has(y)) {
+            if (!currentData[y]) {
+                insertRows[rowPath] = isMatrix || typeof isMatrix !== 'boolean' ? [] : {};
+            }
+
+            accessedRows.add(y);
+        }
+
+        const column = isMatrix || typeof isMatrix !== 'boolean' ? x : (columns[x] && columns[x].name || x);
+
+        setCellValues[`${rowPath}.${column}`] = value;
+    }
+
+    const changes = [];
+
+    if (Object.keys(insertRows).length !== 0) {
+        changes.push({
+            $set: insertRows,
+        });
+    }
+
+    changes.push({
+        $set: setCellValues,
+    });
+
+    return changes;
+}
+
+const setFormula = setValue;
+
+module.exports = {
+    setValue,
+    setFormula,
+}
+
+
+/***/ },
+
+/***/ 227
+(module) {
+
+const setDefinedNames = function(obj) {
+    let [definedNameChanges] = obj.args;
+
+    const set = {};
+    const unset = {};
+
+    const definedNameChangesLength = definedNameChanges.length;
+    for (let i = 0; i < definedNameChangesLength; i++) {
+        const definedNameChange = definedNameChanges[i];
+
+        const propertyPath = `spreadsheet.definedNames.${definedNameChange.index}`;
+
+        if (typeof definedNameChange.value !== 'undefined') {
+            set[propertyPath] = definedNameChange.value;
+        } else {
+            unset[propertyPath] = '';
+        }
+    }
+
+    return {
+        $set: set,
+        $unset: unset,
+    };
+}
+
+module.exports = {
+    setDefinedNames,
+}
+
+
+/***/ },
+
+/***/ 295
+(module) {
+
+const setFooter = function(obj) {
+    let matrix = obj.args[0];
+
+    let changes = { $set: {} };
+
+    changes.$set[`spreadsheet.worksheets.${obj.worksheetIndex}.footers`] = matrix;
+
+    return changes;
+}
+
+const setFooterValue = function(obj) {
+    let items = obj.args[0]
+
+    if (!Array.isArray(items)) {
+        items = [items]
+    }
+
+    const numOfItems = items.length
+
+    const set = {}
+
+    for (let i = 0; i < numOfItems; i++) {
+        const { x, y, value } = items[i];
+        set[`spreadsheet.worksheets.${obj.worksheetIndex}.footers.${y}.${x}`] = value;
+    }
+
+    const changes = { $set: set };
+
+    return changes;
+}
+
+const resetFooter = function(obj) {
+    let changes = { $unset: {} };
+
+    changes.$unset[`spreadsheet.worksheets.${obj.worksheetIndex}.footers`] = '';
+
+    return changes;
+}
+
+module.exports = {
+    setFooter,
+    setFooterValue,
+    resetFooter,
+}
+
+
+/***/ },
+
+/***/ 348
+(module) {
+
+const setFreezeColumns = function(obj) {
+    let columns = obj.args[0];
+
+    let changes = { $set: {} };
+
+    changes.$set[`spreadsheet.worksheets.${obj.worksheetIndex}.freezeColumns`] = columns;
+
+    return changes;
+}
+
+module.exports = {
+    setFreezeColumns,
+}
+
+
+/***/ },
+
+/***/ 530
+(module) {
+
+const setFreezeRows = function(obj) {
+    let rows = obj.args[0];
+
+    let changes = { $set: {} };
+
+    changes.$set[`spreadsheet.worksheets.${obj.worksheetIndex}.freezeRows`] = rows;
+
+    return changes;
+}
+
+module.exports = {
+    setFreezeRows,
+}
+
+
+/***/ },
+
+/***/ 485
+(module) {
+
+const setGroup = function(obj, property) {
+    const [index, quantity, state] = obj.args;
+
+    const propertyPath = `spreadsheet.worksheets.${obj.worksheetIndex}.${property}.${index}`;
+
+    if (quantity) {
+        let set;
+
+        const savedArray = obj.document.spreadsheet.worksheets[obj.worksheetIndex][property];
+
+        if (savedArray[index]) {
+            set = {
+                [`${propertyPath}.group`]: quantity,
+                [`${propertyPath}.state`]: state,
+            }
+        } else {
+            set = {
+                [propertyPath]: {
+                    group: quantity,
+                    state: state,
+                }
+            }
+        }
+
+        return {
+            $set: set,
+        };
+    }
+
+    return {
+        $unset: {
+            [`${propertyPath}.group`]: '',
+            [`${propertyPath}.state`]: '',
+        },
+    };
+}
+
+const setColumnGroup = function(obj) {
+    return setGroup(obj, 'columns');
+}
+
+const setRowGroup = function(obj) {
+    return setGroup(obj, 'rows');
+}
+
+module.exports = {
+    setColumnGroup,
+    setRowGroup,
+};
+
+/***/ },
+
+/***/ 701
+(module) {
+
+const setHeader = function(obj) {
+    const [columnIndex, value] = obj.args;
+
+    const columnPath = `spreadsheet.worksheets.${obj.worksheetIndex}.columns.${columnIndex}`;
+
+    const savedColumns = obj.document.spreadsheet.worksheets[obj.worksheetIndex].columns;
+
+    const set = {};
+
+    if (savedColumns[columnIndex]) {
+        set[`${columnPath}.title`] = value;
+    } else {
+        set[columnPath] = {
+            title: value,
+        };
+    }
+
+    return {
+        $set: set,
+    };
+}
+
+module.exports = {
+    setHeader,
+}
+
+
+/***/ },
+
+/***/ 502
+(module) {
+
+const setMedia = function(obj) {
+    let mediaChanges = obj.args[0];
+
+    if (!Array.isArray(mediaChanges)) {
+        mediaChanges = [mediaChanges];
+    }
+
+    const set = {};
+    const pull = [];
+    const push = [];
+
+    let media = obj.document.spreadsheet.worksheets[obj.worksheetIndex].media;
+
+    const mediaPath = `spreadsheet.worksheets.${obj.worksheetIndex}.media`;
+
+    const mediaChangesLength = mediaChanges.length;
+    for (let i = 0; i < mediaChangesLength; i++) {
+        const item = mediaChanges[i];
+
+        if (Object.keys(item).length !== 1) {
+            const mediaIndex = media.findIndex((mediaItem) => mediaItem.id === item.id);
+
+            if (mediaIndex > -1) {
+                const entries = Object.entries(item);
+
+                const mediaIndexPath = `${mediaPath}.${mediaIndex}`;
+
+                const entriesLength = entries.length;
+                for (let entryIndex = 0; entryIndex < entriesLength; entryIndex++) {
+                    const entry = entries[entryIndex];
+
+                    set[`${mediaIndexPath}.${entry[0]}`] = entry[1];
+                }
+            } else {
+                push.push(item);
+            }
+        } else {
+            pull.push(item.id);
+        }
+    }
+
+    const result = {};
+
+    if (Object.keys(set).length !== 0) {
+        result['$set'] = set;
+    }
+
+    if (push.length !== 0) {
+        result['$push'] = {
+            [mediaPath]: {
+                $each: push,
+            },
+        };
+    }
+
+    if (pull.length !== 0) {
+        result['$pull'] = {
+            [mediaPath]: {
+                id: {
+                    $in: pull,
+                }
+            },
+        };
+    }
+
+    return result;
+}
+
+module.exports = {
+    setMedia,
+}
+
+
+/***/ },
+
+/***/ 562
+(module) {
+
+const setMerge = function(obj) {
+    let mergeObject = obj.args[0];
+
+    let changes = { $set: {} };
+
+    Object.keys(mergeObject).forEach((key) => {
+        changes.$set[`spreadsheet.worksheets.${obj.worksheetIndex}.mergeCells.${key}`] = mergeObject[key];
+    });
+
+    return changes;
+}
+
+const removeMerge = function(obj) {
+    let mergeObject = obj.args[0];
+
+    const cellNames = Object.keys(mergeObject);
+    const cellNamesLength = cellNames.length;
+
+    const unset = {};
+
+    const propertyPath = `spreadsheet.worksheets.${obj.worksheetIndex}.mergeCells`;
+
+    for (let i = 0; i < cellNamesLength; i++) {
+        const cellName = cellNames[i];
+
+        unset[`${propertyPath}.${cellName}`] = '';
+    }
+
+    return {
+        $unset: unset,
+    };
+}
+
+module.exports = {
+    setMerge,
+    removeMerge,
+}
+
+
+/***/ },
+
+/***/ 657
+(module) {
+
+const setMeta = function(obj) {
+    let metaObject = obj.args[0];
+
+    let changes = { $set: {} };
+
+    Object.keys(metaObject).forEach(key => {
+        changes.$set[`spreadsheet.worksheets.${obj.worksheetIndex}.meta.${key}`] = metaObject[key];
+    });
+
+    return changes;
+}
+
+const resetMeta = function(obj) {
+    let cellNames = obj.args[0];
+
+    let changes = { $unset: {} };
+
+    if (cellNames) {
+        cellNames.forEach((cellName) => {
+            changes.$unset[`spreadsheet.worksheets.${obj.worksheetIndex}.meta.${cellName}`] = '';
+        });
+    } else {
+        changes.$unset[`spreadsheet.worksheets.${obj.worksheetIndex}.meta`] = '';
+    }
+
+    return changes;
+}
+
+module.exports = {
+    setMeta,
+    resetMeta,
+}
+
+
+/***/ },
+
+/***/ 349
+(module) {
+
+const setNestedHeaders = function(obj) {
+    let matrix = obj.args[0];
+
+    let changes = { $set: {} };
+
+    changes.$set[`spreadsheet.worksheets.${obj.worksheetIndex}.nestedHeaders`] = matrix;
+
+    return changes;
+}
+
+const setNestedCell = function(obj) {
+    const [cellChanges] = obj.args;
+
+    const set = {};
+
+    const nestedHeadersPath = `spreadsheet.worksheets.${obj.worksheetIndex}.nestedHeaders`;
+
+    const cellChangesLength = cellChanges.length;
+    for (let i = 0; i < cellChangesLength; i++) {
+        const cellChange = cellChanges[i];
+
+        const entries = Object.entries(cellChange.properties);
+
+        const cellPath = `${nestedHeadersPath}.${cellChange.y}.${cellChange.x}`;
+
+        const entriesLength = entries.length;
+        for (let entryIndex = 0; entryIndex < entriesLength; entryIndex++) {
+            const [key, value] = entries[entryIndex];
+
+            set[`${cellPath}.${key}`] = value;
+        }
+    }
+
+    return {
+        $set: set,
+    };
+}
+
+const resetNestedHeaders = function(obj) {
+    
+    let changes = { $unset: {} };
+
+    changes.$unset[`spreadsheet.worksheets.${obj.worksheetIndex}.nestedHeaders`] = '';
+
+    return changes;
+}
+
+module.exports = {
+    setNestedHeaders,
+    setNestedCell,
+    resetNestedHeaders,
+}
+
+
+/***/ },
+
+/***/ 574
+(module, __unused_webpack_exports, __webpack_require__) {
+
+const { updateReferences } = __webpack_require__(191);
+
+const orderBy = function(obj) {
+    const newOrder = obj.args[2];
+
+    const worksheet = obj.document.spreadsheet.worksheets[obj.worksheetIndex];
+
+    const currentData = worksheet.data;
+    const currentRows = worksheet.rows;
+
+    const newData = [];
+    const newRows = [];
+
+    const newOrderLength = newOrder.length;
+    for (let i = 0; i < newOrderLength; i++) {
+        const oldIndex = newOrder[i];
+
+        newData.push(currentData[oldIndex]);
+        newRows.push(currentRows[oldIndex]);
+    }
+
+    const worksheetPath = `spreadsheet.worksheets.${obj.worksheetIndex}`;
+
+    const changes = [{
+        $set: {
+            [`${worksheetPath}.data`]: newData,
+            [`${worksheetPath}.rows`]: newRows,
+        }
+    }];
+
+    // Update references from other properties
+    updateReferences(obj, changes);
+
+    return changes;
+}
+
+module.exports = {
+    orderBy,
+}
+
+
+/***/ },
+
+/***/ 381
+(module, __unused_webpack_exports, __webpack_require__) {
+
+const { getColumnNameFromCoords } = __webpack_require__(582);
+
+const setProperty = function(obj) {
+    let propertyChanges = obj.args[0];
+
+    const set = {};
+
+    const worksheetPath = `spreadsheet.worksheets.${obj.worksheetIndex}`;
+
+    const columnsPath = `${worksheetPath}.columns`;
+    const cellsPath = `${worksheetPath}.cells`;
+
+    const propertyChangesLength = propertyChanges.length;
+    for (let i = 0; i < propertyChangesLength; i++) {
+        let propertyPath;
+        let propertyChange = propertyChanges[i];
+
+        if (typeof propertyChange.y === 'undefined' || propertyChange.y === null) {
+            // Get the column path
+            propertyPath = `${columnsPath}.${propertyChange.x}`;
+        } else {
+            // Get the cell name
+            let cellName = getColumnNameFromCoords(propertyChange.x, propertyChange.y);
+            // Get the cell path
+            propertyPath = `${cellsPath}.${cellName}`;
+        }
+
+        // Update to the following value
+        set[propertyPath] = typeof propertyChange.value !== 'undefined' ? propertyChange.value : null;
+    }
+
+    return {
+        $set: set,
+    };
+}
+
+const updateProperty = function(obj) {
+    let propertyChanges = obj.args[0];
+
+    const worksheetPath = `spreadsheet.worksheets.${obj.worksheetIndex}`;
+
+    const cellsPath = `${worksheetPath}.cells`;
+    const columnsPath = `${worksheetPath}.columns`;
+
+    const columns = obj.document.spreadsheet.worksheets[obj.worksheetIndex].columns;
+
+    const setNewColumns = {};
+    const set = {};
+
+    const propertyChangesLength = propertyChanges.length;
+    for (let i = 0; i < propertyChangesLength; i++) {
+        const propertyChange = propertyChanges[i];
+
+        const entries = Object.entries(propertyChange.value);
+
+        if (typeof propertyChange.y === 'undefined' || propertyChange.y === null) {
+            const columnPath = `${columnsPath}.${propertyChange.x}`;
+
+            if (!columns[propertyChange.x]) {
+                setNewColumns[columnPath] = propertyChange.value;
+
+                columns[propertyChange.x] = {};
+            } else {
+                const entriesLength = entries.length;
+                for (let entryIndex = 0; entryIndex < entriesLength; entryIndex++) {
+                    const [key, value] = entries[entryIndex];
+
+                    set[`${columnPath}.${key}`] = value;
+                }
+            }
+        } else {
+            const cellPath = `${cellsPath}.${getColumnNameFromCoords(propertyChange.x, propertyChange.y)}`;
+
+            const entriesLength = entries.length;
+            for (let entryIndex = 0; entryIndex < entriesLength; entryIndex++) {
+                const [key, value] = entries[entryIndex];
+
+                set[`${cellPath}.${key}`] = value;
+            }
+        }
+    }
+
+    const changes = [];
+
+    if (Object.keys(setNewColumns).length !== 0) {
+        changes.push({
+            $set: setNewColumns
+        });
+    }
+
+    if (Object.keys(set).length !== 0) {
+        changes.push({
+            $set: set
+        });
+    }
+
+    return changes;
+}
+
+module.exports = {
+    setProperty,
+    updateProperty,
+}
+
+
+/***/ },
+
+/***/ 954
+(module, __unused_webpack_exports, __webpack_require__) {
+
+const { updateReferences, dataIsMatrix, moveArrayItems } = __webpack_require__(191);
+
+const setHeight = function (obj) {
+    let [rows, heights] = obj.args;
+
+    if (!Array.isArray(rows)) {
+        rows = [rows];
+    }
+
+    const set = {};
+
+    const heightsIsAnArray = Array.isArray(heights);
+    const rowsPath = `spreadsheet.worksheets.${obj.worksheetIndex}.rows`;
+    const savedRows = obj.document.spreadsheet.worksheets[obj.worksheetIndex].rows || [];
+
+    const rowsLength = rows.length;
+
+    for (let i = 0; i < rowsLength; i++) {
+        const rowIndex = rows[i];
+        const rowPath = `${rowsPath}.${rowIndex}`;
+        const height = heightsIsAnArray ? heights[i] : heights;
+
+        if (savedRows[rowIndex]) {
+            set[`${rowPath}.height`] = height;
+        } else {
+            set[rowPath] = { height: height };
+        }
+    }
+
+    return {
+        $set: set,
+    };
+}
+
+const visibility = function(obj, state) {
+    let rows = obj.args[0];
+
+    if (!Array.isArray(rows)) {
+        rows = [rows];
+    }
+
+    const set = {};
+
+    const rowsPath = `spreadsheet.worksheets.${obj.worksheetIndex}.rows`;
+    const savedRows = obj.document.spreadsheet.worksheets[obj.worksheetIndex].rows || [];
+
+    const rowsLength = rows.length;
+
+    for (let i = 0; i < rowsLength; i++) {
+        const rowIndex = rows[i];
+
+        const rowPath = `${rowsPath}.${rowIndex}`;
+
+        if (savedRows[rowIndex]) {
+            set[`${rowPath}.visible`] = state;
+        } else {
+            set[rowPath] = {
+                visible: state,
+            };
+        }
+    }
+
+    return {
+        $set: set,
+    };
+}
+
+const turnRowIntoObj = function(row, columns) {
+    const result = {};
+
+    const rowLength = row.length;
+    for (let columnIndex = 0; columnIndex < rowLength; columnIndex++) {
+        const propertyName = (columns[columnIndex] && columns[columnIndex].name) || columnIndex;
+
+        result[propertyName] = row[columnIndex];
+    }
+
+    return result;
+}
+
+const insertRow = function(obj) {
+    const [rows] = obj.args;
+
+    rows.sort((a, b) => a.row - b.row);
+
+    const worksheet = obj.document.spreadsheet.worksheets[obj.worksheetIndex];
+
+    const currentData = worksheet.data;
+    let currentDataLength = currentData.length;
+
+    const isMatrix = dataIsMatrix(currentData);
+
+    const worksheetPath = `spreadsheet.worksheets.${obj.worksheetIndex}`;
+
+    const currentColumns = worksheet.columns;
+
+    const currentRows = worksheet.rows;
+
+    const rowsLength = rows.length;
+    for (let index = 0; index < rowsLength; index++) {
+        const { row: rowIndex, data: rowData, options } = rows[index];
+
+        const data = isMatrix === false && Array.isArray(rowData) ? turnRowIntoObj(rowData, currentColumns) : rowData;
+
+        if (rowIndex > currentDataLength) {
+            currentData[rowIndex] = data;
+
+            currentDataLength = rowIndex + 1;
+        } else {
+            currentData.splice(rowIndex, 0, data);
+
+            currentDataLength++;
+        }
+
+        if (rowIndex > currentRows.length) {
+            currentRows[rowIndex] = options;
+        } else {
+            currentRows.splice(rowIndex, 0, options);
+        }
+    }
+
+    const set = {
+        [`${worksheetPath}.data`]: currentData,
+        [`${worksheetPath}.rows`]: currentRows,
+        [worksheetPath + '.minDimensions.1']: Math.max(worksheet.minDimensions[1] + rowsLength, rows[rowsLength - 1].row + 1),
+    };
+
+    const changes = [{
+        $set: set
+    }];
+
+    // Update references from other properties
+    updateReferences(obj, changes);
+
+    return changes;
+}
+
+const hideRow = function (obj) {
+    return visibility(obj, false)
+}
+
+const showRow = function (obj) {
+    return visibility(obj, true)
+}
+
+const moveRow = function (obj) {
+    const [from, to, quantity] = obj.args;
+
+    const worksheet = obj.document.spreadsheet.worksheets[obj.worksheetIndex];
+
+    const rows = worksheet.rows;
+
+    moveArrayItems(rows, from, to, quantity);
+
+    const data = worksheet.data;
+
+    moveArrayItems(data, from, to, quantity);
+
+    const worksheetPath = `spreadsheet.worksheets.${obj.worksheetIndex}`;
+
+    const changes = [{
+        $set: {
+            [`${worksheetPath}.data`]: data,
+            [`${worksheetPath}.rows`]: rows
+        }
+    }];
+
+    // Update references from other properties
+    updateReferences(obj, changes);
+
+    return changes;
+}
+
+const deleteRow = function(obj) {
+    const [rowsToDelete] = obj.args;
+
+    rowsToDelete.sort((a, b) => a - b);
+
+    let lastSimplifieRemoval = [rowsToDelete[0], 1];
+
+    const simplifiedRowsToDelete = [];
+
+    const length = rowsToDelete.length;
+    for (let i = 1; i < length; i++) {
+        const rowIndex = rowsToDelete[i];
+
+        if (rowIndex === lastSimplifieRemoval[0] + lastSimplifieRemoval[1]) {
+            lastSimplifieRemoval[1]++;
+        } else {
+            simplifiedRowsToDelete.push(lastSimplifieRemoval);
+
+            lastSimplifieRemoval = [rowIndex, 1];
+        }
+    }
+
+    simplifiedRowsToDelete.push(lastSimplifieRemoval);
+
+    const worksheet = obj.document.spreadsheet.worksheets[obj.worksheetIndex];
+
+    const currentData = worksheet.data;
+    const currentRows = worksheet.rows;
+
+    for (let i = simplifiedRowsToDelete.length - 1; i > -1; i--) {
+        const [removalIndex, numOfRemovedItems] = simplifiedRowsToDelete[i];
+
+        currentData.splice(removalIndex, numOfRemovedItems);
+        currentRows.splice(removalIndex, numOfRemovedItems);
+    }
+
+    const worksheetPath = `spreadsheet.worksheets.${obj.worksheetIndex}`;
+
+    const set = {
+        [`${worksheetPath}.data`]: currentData,
+        [`${worksheetPath}.rows`]: currentRows,
+        [`${worksheetPath}.minDimensions.1`]: worksheet.minDimensions[1] - length
+    }
+
+    const changes = [{
+        $set: set,
+    }];
+
+    // Update references from other properties
+    updateReferences(obj, changes);
+
+    return changes;
+}
+
+const setRowId = function(obj) {
+    const savedRows = obj.document.spreadsheet.worksheets[obj.worksheetIndex].rows;
+
+    const rowsPath = `spreadsheet.worksheets.${obj.worksheetIndex}.rows`;
+
+    const set = {};
+
+    const idChanges = Object.entries(obj.args[0]);
+
+    const idChangesLength = idChanges.length;
+    for (let i = 0; i < idChangesLength; i++) {
+        const [rowIndex, rowId] = idChanges[i];
+
+        const rowPath = `${rowsPath}.${rowIndex}`;
+
+        if (savedRows[rowIndex]) {
+            set[`${rowPath}.id`] = rowId;
+        } else {
+            set[rowPath] = {
+                id: rowId
+            };
+        }
+    }
+
+    return {
+        $set: set,
+    };
+}
+
+module.exports = {
+    setHeight,
+    insertRow,
+    hideRow,
+    showRow,
+    moveRow,
+    deleteRow,
+    setRowId,
+}
+
+
+/***/ },
+
+/***/ 315
+(module) {
+
+const setStyle = function(obj) {
+    const set = {
+        [`spreadsheet.style`]: obj.instance.config.style,
+        [`spreadsheet.worksheets.${obj.worksheetIndex}.style`]: obj.instance.worksheets[obj.worksheetIndex].getStyle(null, true),
+    };
+
+    return {
+        $set: set,
+    };
+}
+
+const resetStyle = function(obj) {
+    const set = {
+        [`spreadsheet.worksheets.${obj.worksheetIndex}.style`]: obj.instance.worksheets[obj.worksheetIndex].getStyle(null, true),
+    };
+
+    return {
+        $set: set,
+    };
+}
+
+module.exports = {
+    setStyle,
+    resetStyle
+}
+
+
+/***/ },
+
+/***/ 774
+(module) {
+
+const setValidations = function(obj) {
+    let newValue = obj.args[0];
+
+    const set = {}
+
+    newValue.forEach((validation) => {
+        let key = `spreadsheet.validations.${validation.index}`;
+        if (typeof validation.value === 'string') {
+            key += '.range';
+        }
+
+        set[key] = validation.value;
+    })
+
+    const changes = { $set: set };
+
+    return changes;
+}
+
+module.exports = {
+    setValidations,
+}
+
+
+/***/ },
+
+/***/ 666
+(module) {
+
+const validateWorksheet = function(worksheet) {
+    // Media
+    if (! worksheet.media) {
+        worksheet.media = [];
+    }
+    // Data
+    if (! worksheet.data) {
+        worksheet.data = [];
+    }
+    // Rows
+    if (! worksheet.rows) {
+        worksheet.rows = [];
+    }
+    // Columns
+    if (! worksheet.columns) {
+        worksheet.columns = [];
+    }
+}
+
+const createWorksheet = function(obj) {
+    let config = obj.args[0];
+    let position = obj.args[1]
+
+    validateWorksheet(config);
+
+    let changes = {
+        $push: {
+            'spreadsheet.worksheets': {
+                $each: [config],
+            }
+        }
+    };
+
+    if (typeof(position) !== 'undefined') {
+        changes.$push['spreadsheet.worksheets'].$position = position;
+    }
+
+    return changes;
+}
+
+const deleteWorksheet = function(obj) {
+    let position = obj.args[0]
+
+    let unset = {}
+    unset[`spreadsheet.worksheets.${position}`] = 1;
+
+    let pull = {};
+    pull[`spreadsheet.worksheets`] = null;
+
+    return [{ $unset: unset }, { $pull: pull }];
+}
+
+const renameWorksheet = function(obj) {
+    let worksheetIndex = obj.args[0];
+    let newName = obj.args[1]
+    let changes = { $set: {} };
+    changes.$set[`spreadsheet.worksheets.${worksheetIndex}.worksheetName`] = newName;
+
+    return changes;
+}
+
+const moveWorksheet = function(obj) {
+    let origin = obj.args[0];
+    let destination = obj.args[1];
+
+    let worksheet = obj.document.spreadsheet.worksheets[origin];
+    if (! worksheet) {
+        throw new Error('Worksheet not found');
+    }
+
+    const pull = {};
+    pull['spreadsheet.worksheets'] = worksheet;
+
+    let push = {};
+    push['spreadsheet.worksheets'] = { $each: [worksheet], $position: destination };
+
+    return [{ $pull: pull },{ $push: push }];
+}
+
+const setWorksheetState = function(obj) {
+    let [index, state] = obj.args;
+    let changes = { $set: {} };
+
+    if (typeof state === 'boolean') {
+        state = state ? 'visible' : 'hidden';
+    }
+
+    changes.$set[`spreadsheet.worksheets.${index}.worksheetState`] = state;
+    return changes;
+}
+
+module.exports = {
+    validateWorksheet,
+    createWorksheet,
+    deleteWorksheet,
+    renameWorksheet,
+    moveWorksheet,
+    setWorksheetState,
+}
+
+
+/***/ },
+
+/***/ 191
+(module) {
+
+const updateReferences = function(obj, changes) {
+    const set = {};
+
+    // Properties to be updated
+    let properties = ['style','meta','comments','cells','mergeCells'];
+    properties.forEach((v) => {
+        let values = obj.instance.worksheets[obj.worksheetIndex].options[v];
+        if (values && Object.keys(values).length > 0) {
+            set[`spreadsheet.worksheets.${obj.worksheetIndex}.${v}`] = values;
+        }
+    });
+    changes.push({ $set: set })
+}
+
+const moveArrayItems = function(array, from, to, quantity) {
+    const movedItems = array.splice(from, quantity);
+
+    while (movedItems.length < quantity) {
+        movedItems.push(null);
+    }
+
+    const insertAt = from < to ? to - quantity + 1 : to;
+
+    while (array.length < insertAt) {
+        array.push(null);
+    }
+
+    array.splice(insertAt, 0, ...movedItems);
+}
+
+const dataIsMatrix = function(data) {
+    let dataLength = data.length;
+    for (let i = 0; i < dataLength; i++) {
+        if (data[i]) {
+            return Array.isArray(data[i]);
+        }
+    }
+
+    return null;
+}
+
+module.exports = {
+    updateReferences,
+    moveArrayItems,
+    dataIsMatrix,
+}
+
+/***/ },
+
+/***/ 127
+(module) {
+
+"use strict";
+module.exports = require("jsonwebtoken");
+
+/***/ },
+
+/***/ 582
+(module) {
+
+"use strict";
+module.exports = require("jspreadsheet");
+
+/***/ },
+
+/***/ 884
+(module) {
+
+"use strict";
+module.exports = require("mongodb");
+
+/***/ },
+
+/***/ 333
+(module) {
+
+"use strict";
+module.exports = require("uuid");
+
+/***/ }
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__(44);
+/******/ 	module.exports = __webpack_exports__;
+/******/ 	
+/******/ })()
+;
