@@ -34,6 +34,8 @@ const { orderBy } = require('./modules/order');
     const dbName = process.env.MONGODB_DB_NAME || 'jspreadsheet';
     const collectionName = process.env.MONGODB_COLLECTION_NAME || 'documents';
 
+    console.log('here -------------->', { url, dbName, collectionName })
+
     const client = new MongoClient(url);
 
     client.connect();
