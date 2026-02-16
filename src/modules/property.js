@@ -1,4 +1,4 @@
-const { getColumnNameFromCoords } = require("../../api/utils/spreadsheet");
+const { getColumnNameFromCoords } = require("jspreadsheet");
 
 const setProperty = function(obj) {
     let propertyChanges = obj.args[0];
