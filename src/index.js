@@ -30,7 +30,7 @@ const { orderBy } = require('./modules/order');
     global.adapter = factory();
 }(this, (function() {
 
-    const url = 'mongodb://mongodb';
+    const url = process.env.MONGO_URL || 'mongodb://mongodb';
     const client = new MongoClient(url);
 
     client.connect();
