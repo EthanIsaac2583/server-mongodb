@@ -30,13 +30,16 @@ const { orderBy } = require('./modules/order');
     global.adapter = factory();
 }(this, (function() {
 
-    const url = 'mongodb://mongodb';
+    const url = process.env.MONGODB_URI || process.env.MONGODB_URL || 'mongodb://mongodb';
+    const dbName = process.env.MONGODB_DB_NAME || 'jspreadsheet';
+    const collectionName = process.env.MONGODB_COLLECTION_NAME || 'documents';
+
     const client = new MongoClient(url);
 
     client.connect();
 
-    const db = client.db('jspreadsheet');
-    const collection = db.collection('documents');
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
 
     const methods = {
         setConfig,
